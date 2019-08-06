@@ -1,0 +1,23 @@
+version: 2.1
+
+workflows:
+  integrate:
+    jobs:
+      - lint
+
+jobs:
+  lint:
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - checkout
+      - run: make build
+      - run:
+          name: lint
+          command: |
+            mkdir -p ./reports
+            ./golangci-lint run -v --out-format=junit-xml | tee reports/lint.xml
+      - store_artifacts:
+          path: ./reports
+      - store_test_results:
+          path: ./reports
