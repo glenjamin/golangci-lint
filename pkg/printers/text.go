@@ -53,7 +53,7 @@ func (p *Text) Print(ctx context.Context, issues <-chan result.Issue) error {
 }
 
 func (p Text) printIssue(i *result.Issue) {
-	text := p.SprintfColored(color.FgRed, "%s", i.Text)
+	text := p.SprintfColored(color.FgRed, "%s%s", i.Text)
 	if p.printLinterName {
 		text += fmt.Sprintf(" (%s)", i.FromLinter)
 	}

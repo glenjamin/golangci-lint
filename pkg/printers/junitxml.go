@@ -38,6 +38,14 @@ func NewJunitXML() *JunitXML {
 	return &JunitXML{}
 }
 
+func helper() string {
+	a := "abcdef"
+	b := "abcdef"
+	c := "abcdef"
+
+	return a + b + c
+}
+
 func (JunitXML) Print(ctx context.Context, issues <-chan result.Issue) error {
 	suites := make(map[string]testSuiteXML) // use a map to group by file
 
@@ -66,8 +74,6 @@ func (JunitXML) Print(ctx context.Context, issues <-chan result.Issue) error {
 
 	enc := xml.NewEncoder(logutils.StdOut)
 	enc.Indent("", "  ")
-	if err := enc.Encode(res); err != nil {
-		return err
-	}
+	enc.Encode(res)
 	return nil
 }
